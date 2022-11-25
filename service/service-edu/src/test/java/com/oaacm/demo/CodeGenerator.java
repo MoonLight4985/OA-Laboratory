@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 /**
  * @author
@@ -26,7 +26,7 @@ public class CodeGenerator {
         // 2、全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir("D:\\Workspace\\IdeaWorkspace\\oaacm\\service\\service_edu" + "/src/main/java");
+        gc.setOutputDir("D:\\Workspace\\IdeaWorkspace\\oaacm\\service\\service-edu" + "/src/main/java");
 
         gc.setAuthor("testjava");
         gc.setOpen(false); //生成后是否打开资源管理器
@@ -43,7 +43,7 @@ public class CodeGenerator {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/guli?serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/acmlab?serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
@@ -54,7 +54,7 @@ public class CodeGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName("eduservice"); //模块名
         //包  com.atguigu.eduservice
-        pc.setParent("com.atguigu");
+        pc.setParent("com.oaacm");
         //包  com.atguigu.eduservice.controller
         pc.setController("controller");
         pc.setEntity("entity");
