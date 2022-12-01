@@ -1,7 +1,7 @@
 package com.oaacm.eduservice.mapper;
 
-import com.oaacm.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.oaacm.eduservice.entity.EduTeacher;
 
 /**
  * <p>

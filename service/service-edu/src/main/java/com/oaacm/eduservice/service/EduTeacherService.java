@@ -1,7 +1,7 @@
 package com.oaacm.eduservice.service;
 
-import com.oaacm.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.oaacm.eduservice.entity.EduTeacher;
 
 /**
  * <p>
