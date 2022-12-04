@@ -1,6 +1,7 @@
 package com.oaacm.eduservice.controller;
 
 
+import com.oaacm.commonutils.R;
 import com.oaacm.eduservice.entity.EduTeacher;
 import com.oaacm.eduservice.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,10 @@ public class EduTeacherController {
 
     //1.查询讲师所有列表
     @GetMapping("findAll")
-    public List<EduTeacher> findAllTeacher() {
+    public R findAllTeacher() {
         //调用service的方法查询所有
         List<EduTeacher> list = teacherService.list(null);
-        return list;
+        return R.ok().data("items", list);
     }
 
     /**
@@ -36,9 +37,12 @@ public class EduTeacherController {
      * @return whether succeed
      */
     @DeleteMapping("{id}")
-    public boolean removeTeacher(@PathVariable String id) {
+    public R removeTeacher(@PathVariable String id) {
         boolean flag = teacherService.removeById(id);
-        return flag;
+        if (flag)
+            return R.ok();
+        else
+            return R.error();
     }
 
 }
