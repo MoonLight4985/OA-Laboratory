@@ -4,10 +4,7 @@ package com.oaacm.eduservice.controller;
 import com.oaacm.eduservice.entity.EduTeacher;
 import com.oaacm.eduservice.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,14 @@ public class EduTeacherController {
         return list;
     }
 
+    /**
+     * Tombstone a teacher
+     * @return whether succeed
+     */
+    @DeleteMapping("{id}")
+    public boolean removeTeacher(@PathVariable String id) {
+        boolean flag = teacherService.removeById(id);
+        return flag;
+    }
 
 }
