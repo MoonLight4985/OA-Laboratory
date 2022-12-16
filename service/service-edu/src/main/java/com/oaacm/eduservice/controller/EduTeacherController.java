@@ -22,6 +22,7 @@ import java.util.List;
  * @since 2022-11-25
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/eduservice/edu-teacher")
 public class EduTeacherController {
     //注入service
@@ -77,34 +78,39 @@ public class EduTeacherController {
     /**
      * query in condition
      */
-    @GetMapping("pageTeacherCondition/{current}/{limit}")
-    public R pageTeacherCondition(@PathVariable long current,
-                                  @PathVariable long limit,
-                                  @RequestBody(required = false) TeacherQueryVo teacherQueryVo) {
-        //Create a Page Object
-        Page<EduTeacher> page = new Page<>(current, limit);
+    @PostMapping("pageTeacherCondition/{current}/{limit}")
+    public R pageTeacherCondition(@PathVariable long current, @PathVariable long limit,
+                                  @RequestBody(required = false) TeacherQueryVo teacherQuery) {
+        //创建page对象
+        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
+        //构建条件
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
-        String name = teacherQueryVo.getName();
-        Integer level = teacherQueryVo.getLevel();
-        String begin = teacherQueryVo.getBegin();
-        String end = teacherQueryVo.getEnd();
+        // 多条件组合查询
+        String name = teacherQuery.getName();
+        Integer level = teacherQuery.getLevel();
+        String begin = teacherQuery.getBegin();
+        String end = teacherQuery.getEnd();
+        //判断条件值是否为空，如果不为空拼接条件
         if (!StringUtils.isEmpty(name)) {
-            wrapper.like("name", name);//字段名
+            //构建条件
+            wrapper.like("name", name);
         }
         if (!StringUtils.isEmpty(level)) {
             wrapper.eq("level", level);
         }
         if (!StringUtils.isEmpty(begin)) {
-            wrapper.like("begin", begin);
+            wrapper.ge("gmt_create", begin);
         }
         if (!StringUtils.isEmpty(end)) {
-            wrapper.like("end", end);
+            wrapper.le("gmt_create", end);
         }
-        teacherService.page(page, wrapper);
-        long total = page.getTotal();
-        List<EduTeacher> records = page.getRecords();
+        //排序
+        wrapper.orderByDesc("gmt_create");
+        //调用方法实现条件查询分页
+        teacherService.page(pageTeacher, wrapper);
+        long total = pageTeacher.getTotal();//总记录数
+        List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
         return R.ok().data("total", total).data("rows", records);
-
     }
 
     /**
