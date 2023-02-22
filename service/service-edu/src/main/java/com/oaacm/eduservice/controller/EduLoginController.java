@@ -19,6 +19,4 @@ public class EduLoginController {
         return R.ok().data("roles", "[admin]").data("name", "admin").data("avatar", "https://acmlab.oss-cn-qingdao.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg");
     }
 
-
-
 }

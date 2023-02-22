@@ -1,5 +1,6 @@
 package com.oaacm.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.oaacm.eduservice.entity.EduCourse;
 import com.oaacm.eduservice.entity.EduCourseDescription;
 import com.oaacm.eduservice.entity.vo.CourseInfoVo;
@@ -40,5 +41,30 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescription.setId(cid);
         eduCourseDescriptionService.save(eduCourseDescription);
         return cid;
+    }
+
+    @Override
+    public CourseInfoVo getCourseInfo(String courseId) {
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        EduCourseDescription courseDescription = eduCourseDescriptionService.getById(courseId);
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        BeanUtils.copyProperties(eduCourse, courseInfoVo);
+        courseInfoVo.setDescription(courseDescription.getDescription());
+        return courseInfoVo;
+    }
+
+    @Override
+    public void updateCourseInfo(CourseInfoVo courseInfoVo) {
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfoVo, eduCourse);
+        int update = baseMapper.updateById(eduCourse);
+        if (update == 0) {
+            throw new ACMException(20001, "修改课程信息失败！");
+        }
+        EduCourseDescription eduCourseDescription = new EduCourseDescription();
+        eduCourseDescription.setId(eduCourse.getId());
+        eduCourseDescription.setDescription(courseInfoVo.getDescription());
+        eduCourseDescriptionService.updateById(eduCourseDescription);
+
     }
 }
